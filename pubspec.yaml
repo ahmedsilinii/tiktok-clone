@@ -10,15 +10,15 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_riverpod: ^2.4.9
-  firebase_core: ^2.32.0
-  firebase_auth: ^4.9.1
-  cloud_firestore: ^4.8.3
-  firebase_storage: ^11.6.1
+  firebase_core: ^3.13.1
+  firebase_auth: ^5.5.4
+  cloud_firestore: ^5.6.8
+  firebase_storage: ^12.4.6
   video_player: ^2.8.0
   cached_network_image: ^3.3.0
-  flutter_cache_manager: ^3.3.0222
-  uuid: ^3.0.7
-  intl: ^0.18.1
+  flutter_cache_manager: ^3.3.0
+  uuid: ^4.5.1
+  intl: ^0.20.2
 
 dev_dependencies:
   flutter_test:

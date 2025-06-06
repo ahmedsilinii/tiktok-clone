@@ -67,8 +67,11 @@ class AuthController extends StateNotifier<AsyncValue<AppUser?>> {
       await ref
           .read(authRepositoryProvider)
           .signInWithEmailAndPassword(email, password);
+      // ignore: use_build_context_synchronously
+      showSnackBar(context, "Signed in successfully");
     } catch (e) {
       state = AsyncValue.error(e, StackTrace.current);
+      showSnackBar(context, "Sign in failed: $e");
     }
   }
 
