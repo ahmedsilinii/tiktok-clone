@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tiktok_clone/core/constants/constants.dart';
 import 'package:tiktok_clone/views/screens/auth/login_screen.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(
+    ProviderScope(
+      child: const MainApp(),
+    ),
+  );
 }
 
 class MainApp extends StatelessWidget {
