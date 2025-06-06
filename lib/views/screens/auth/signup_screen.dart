@@ -1,30 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:tiktok_clone/core/constants/constants.dart';
-import 'package:tiktok_clone/views/screens/auth/signup_screen.dart';
 import 'package:tiktok_clone/views/widgets/text_input_field.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class SignupScreen extends StatelessWidget {
+  SignupScreen({super.key});
 
   static Route route() {
-    return MaterialPageRoute(builder: (_) => LoginScreen());
+    return MaterialPageRoute(builder: (_) => SignupScreen());
   }
 
-  @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
-
   final TextEditingController _passwordController = TextEditingController();
-
-  _onTapLogin() {
-    // Handle login logic here
-  }
+  final TextEditingController _usernameController = TextEditingController();
 
   _onTapSignUp() {
-    Navigator.push(context, SignupScreen.route());
+    // Handle sign up logic here
+  }
+  _onTapLogin(BuildContext context) {
+    Navigator.pop(context);
   }
 
   @override
@@ -39,10 +32,15 @@ class _LoginScreenState extends State<LoginScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text(
-                  'Login',
+                  'Sign Up',
                   style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 40),
+                TextInputField(
+                  labelText: 'Username',
+                  controller: _usernameController,
+                ),
+                const SizedBox(height: 20),
                 TextInputField(
                   labelText: 'Email',
                   controller: _emailController,
@@ -57,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: _onTapLogin,
+                    onPressed: _onTapSignUp,
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       backgroundColor: AppColors.buttonColor,
@@ -65,19 +63,18 @@ class _LoginScreenState extends State<LoginScreen> {
                         borderRadius: BorderRadius.circular(8),
                       ),
                     ),
-                    child: const Text('Login'),
+                    child: const Text('Sign Up'),
                   ),
                 ),
                 const SizedBox(height: 16),
-
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("Don't have an account?"),
+                    const Text("Already have an account?"),
                     TextButton(
-                      onPressed: _onTapSignUp,
+                      onPressed: () => _onTapLogin(context),
                       child: Text(
-                        'Sign Up',
+                        'Login',
                         style: TextStyle(color: AppColors.buttonColor),
                       ),
                     ),
