@@ -64,13 +64,16 @@ class AuthRepository {
         password: password,
       );
       final user = userCredential.user!;
+      print('User created: ${user.uid}');
       await _firestore.collection('users').doc(user.uid).set({
         'uid': user.uid,
         'email': email,
         'displayName': username,
         'createdAt': FieldValue.serverTimestamp(),
       });
-    } catch (e) {
+      print('Firestore write attempted for ${user.uid}');
+    } catch (e, st) {
+      print('Failed to sign up: $e\n$st');
       throw Exception('Failed to sign up: $e');
     }
   }

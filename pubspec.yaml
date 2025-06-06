@@ -16,7 +16,7 @@ dependencies:
   firebase_storage: ^11.6.1
   video_player: ^2.8.0
   cached_network_image: ^3.3.0
-  flutter_cache_manager: ^3.3.0
+  flutter_cache_manager: ^3.3.0222
   uuid: ^3.0.7
   intl: ^0.18.1
 
