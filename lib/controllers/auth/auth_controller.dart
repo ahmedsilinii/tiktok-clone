@@ -97,6 +97,8 @@ class AuthController extends StateNotifier<AsyncValue<AppUser?>> {
       await ref.read(authRepositoryProvider).signUp(email, password, username);
       // ignore: use_build_context_synchronously
       showSnackBar(context, "Account created successfully");
+      // ignore: use_build_context_synchronously
+      Navigator.pop(context);
     } catch (e) {
       state = AsyncValue.error(e, StackTrace.current);
     }

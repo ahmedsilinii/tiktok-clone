@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tiktok_clone/controllers/auth/auth_controller.dart';
 import 'package:tiktok_clone/views/screens/auth/login_screen.dart';
+import 'package:tiktok_clone/views/screens/home/home_screen.dart';
 
 class AuthScreen extends ConsumerWidget {
   const AuthScreen({super.key});
@@ -19,8 +20,7 @@ class AuthScreen extends ConsumerWidget {
             return LoginScreen();
           }
 
-
-            return Text('');
+          return HomeScreen();
         },
       ),
     );
