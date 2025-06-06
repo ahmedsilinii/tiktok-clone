@@ -10,6 +10,7 @@ class AuthRepository {
 
   AuthRepository(this._auth, this._firestore);
 
+  // ignore: unused_element
   Future<void> _createUserProfile(User user) async {
     await _firestore.collection('userprofile').doc(user.uid).set({
       'uid': user.uid,
