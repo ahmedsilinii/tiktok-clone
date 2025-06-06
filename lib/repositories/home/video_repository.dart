@@ -25,6 +25,17 @@ class VideoRepository {
         );
   }
 
+  Future<List<File>> getCachedVideos(List<String> urls) async {
+    List<File> files = [];
+    for (final url in urls) {
+      final fileInfo = await _cacheManager.getFileFromCache(url);
+      if (fileInfo != null && fileInfo.file.existsSync()) {
+        files.add(fileInfo.file);
+      }
+    }
+    return files;
+  }
+
   Future<File> cacheVideo(String url) async {
     return await _cacheManager.getSingleFile(url);
   }
