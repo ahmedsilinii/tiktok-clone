@@ -1,34 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tiktok_clone/core/constants/constants.dart';
 import 'package:tiktok_clone/views/screens/auth/signup_screen.dart';
 import 'package:tiktok_clone/views/widgets/text_input_field.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
 
   static Route route() {
-    return MaterialPageRoute(builder: (_) => LoginScreen());
+    return MaterialPageRoute(builder: (_) => const LoginScreen());
   }
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  ConsumerState<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+class _LoginScreenState extends ConsumerState<LoginScreen> {
+  late final TextEditingController _emailController;
+  late final TextEditingController _passwordController;
 
-  _onTapLogin() {
+  @override
+  void initState() {
+    super.initState();
+    _emailController = TextEditingController();
+    _passwordController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  void _onTapLogin() {
     // Handle login logic here
   }
 
-  _onTapSignUp() {
+  void _onTapSignUp() {
     Navigator.push(context, SignupScreen.route());
   }
 
-  _onTapAnonymousLogin() async {
-   //login anonymous
-  }
+  void _onTapAnonymousLogin() {}
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +96,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         borderRadius: BorderRadius.circular(8),
                       ),
                     ),
-                    child: Text('Sign in Anonymously', style: TextStyle(color: AppColors.textColor)),
+                    child: Text(
+                      'Sign in Anonymously',
+                      style: TextStyle(color: AppColors.textColor),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 16),
