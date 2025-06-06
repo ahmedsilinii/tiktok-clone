@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tiktok_clone/controllers/auth/auth_controller.dart';
 import 'package:tiktok_clone/core/constants/constants.dart';
 import 'package:tiktok_clone/views/widgets/text_input_field.dart';
 
@@ -20,7 +21,13 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
   final TextEditingController _usernameController = TextEditingController();
 
   void _onTapSignUp() {
-    // Handle sign up logic here
+    final email = _emailController.text.trim();
+    final password = _passwordController.text.trim();
+    final username = _usernameController.text.trim();
+
+    ref
+        .read(authControllerProvider.notifier)
+        .signUp(context, email, password, username);
   }
 
   void _onTapLogin(BuildContext context) {
