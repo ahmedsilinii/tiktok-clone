@@ -1,23 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tiktok_clone/core/constants/constants.dart';
 import 'package:tiktok_clone/views/widgets/text_input_field.dart';
 
-class SignupScreen extends StatelessWidget {
-  SignupScreen({super.key});
+class SignupScreen extends ConsumerStatefulWidget {
+  const SignupScreen({super.key});
 
   static Route route() {
-    return MaterialPageRoute(builder: (_) => SignupScreen());
+    return MaterialPageRoute(builder: (_) => const SignupScreen());
   }
 
+  @override
+  ConsumerState<SignupScreen> createState() => _SignupScreenState();
+}
+
+class _SignupScreenState extends ConsumerState<SignupScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
 
-  _onTapSignUp() {
+  void _onTapSignUp() {
     // Handle sign up logic here
   }
-  _onTapLogin(BuildContext context) {
+
+  void _onTapLogin(BuildContext context) {
     Navigator.pop(context);
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    _usernameController.dispose();
+    super.dispose();
   }
 
   @override
