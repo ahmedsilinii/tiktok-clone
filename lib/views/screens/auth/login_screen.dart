@@ -16,7 +16,6 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
-
   final TextEditingController _passwordController = TextEditingController();
 
   _onTapLogin() {
@@ -25,6 +24,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
   _onTapSignUp() {
     Navigator.push(context, SignupScreen.route());
+  }
+
+  _onTapAnonymousLogin() async {
+   //login anonymous
   }
 
   @override
@@ -69,7 +72,21 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 const SizedBox(height: 16),
-
+                SizedBox(
+                  width: double.infinity,
+                  child: OutlinedButton(
+                    onPressed: _onTapAnonymousLogin,
+                    style: OutlinedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      side: BorderSide(color: AppColors.buttonColor!),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    child: Text('Sign in Anonymously', style: TextStyle(color: AppColors.textColor)),
+                  ),
+                ),
+                const SizedBox(height: 16),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
