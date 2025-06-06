@@ -29,4 +29,16 @@ class VideoController extends StreamNotifier<List<Video>> {
       throw Exception('Failed to like video: $e');
     }
   }
+
+  void preCacheVideos(List<Video> videos, int currentIndex) {
+    final indicesToCache = [
+      currentIndex - 1,
+      currentIndex,
+      currentIndex + 1,
+    ].where((i) => i >= 0 && i < videos.length);
+
+    for (final index in indicesToCache) {
+      ref.read(videoRepositoryProvider).cacheVideo(videos[index].url);
+    }
+  }
 }
