@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:tiktok_clone/views/widgets/text_input_field.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
+
+  _onTapLogin() {
+    // Handle login logic here
+  }
+  _onTapSignUp() {
+    // Navigate to Sign Up screen
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,28 +27,21 @@ class LoginScreen extends StatelessWidget {
                   style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 40),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    labelText: 'Email',
-                    border: OutlineInputBorder(),
-                  ),
-                  keyboardType: TextInputType.emailAddress,
+                TextInputField(
+                  labelText: 'Email',
+                  controller: TextEditingController(),
                 ),
                 const SizedBox(height: 20),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    labelText: 'Password',
-                    border: OutlineInputBorder(),
-                  ),
+                TextInputField(
+                  labelText: 'Password',
+                  controller: TextEditingController(),
                   obscureText: true,
                 ),
                 const SizedBox(height: 30),
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () {
-                      // Handle login action
-                    },
+                    onPressed: _onTapLogin,
                     child: const Text('Login'),
                   ),
                 ),
@@ -51,9 +52,7 @@ class LoginScreen extends StatelessWidget {
                   children: [
                     const Text("Don't have an account?"),
                     TextButton(
-                      onPressed: () {
-                        // Handle navigation to sign up
-                      },
+                      onPressed: _onTapSignUp,
                       child: const Text('Sign Up'),
                     ),
                   ],
