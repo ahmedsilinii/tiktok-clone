@@ -26,8 +26,8 @@ class AuthRepository {
 
   Future<void> signInAnonymously() async {
     try {
-      final userCredential = await _auth.signInAnonymously();
-      await _createUserProfile(userCredential.user!);
+      await _auth.signInAnonymously();
+      // await _createUserProfile(userCredential.user!);
     } catch (e) {
       throw Exception('Failed to sign in anonymously: $e');
     }
@@ -43,10 +43,7 @@ class AuthRepository {
 
   Future<void> signInWithEmailAndPassword(String email, String password) async {
     try {
-      final userCredential = await _auth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+      await _auth.signInWithEmailAndPassword(email: email, password: password);
       // Optionally, you can create a user profile if needed:
       // await _createUserProfile(userCredential.user!);
     } catch (e) {
@@ -54,11 +51,7 @@ class AuthRepository {
     }
   }
 
-  Future<void> signUp(
-    String email,
-    String password,
-    String username,
-  ) async {
+  Future<void> signUp(String email, String password, String username) async {
     try {
       final userCredential = await _auth.createUserWithEmailAndPassword(
         email: email,
