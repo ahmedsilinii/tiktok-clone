@@ -14,7 +14,8 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       title: 'Video Feed App',
       theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: backgroundColor,
+        scaffoldBackgroundColor: AppColors.backgroundColor,
+        
       ),
       home: LoginScreen(),
     );

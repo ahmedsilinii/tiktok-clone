@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tiktok_clone/core/constants/constants.dart';
 import 'package:tiktok_clone/views/widgets/text_input_field.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -45,6 +46,13 @@ class LoginScreen extends StatelessWidget {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: _onTapLogin,
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      backgroundColor: AppColors.buttonColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
                     child: const Text('Login'),
                   ),
                 ),
@@ -52,11 +60,14 @@ class LoginScreen extends StatelessWidget {
 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+                    children: [
                     const Text("Don't have an account?"),
                     TextButton(
                       onPressed: _onTapSignUp,
-                      child: const Text('Sign Up'),
+                      child:  Text(
+                      'Sign Up',
+                      style: TextStyle(color: AppColors.buttonColor),
+                      ),
                     ),
                   ],
                 ),
