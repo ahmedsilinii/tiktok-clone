@@ -40,7 +40,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
     ref
         .read(authControllerProvider.notifier)
-        .signInWithEmailAndPassword(email, password);
+        .signInWithEmailAndPassword(context, email, password);
   }
 
   void _onTapSignUp() {

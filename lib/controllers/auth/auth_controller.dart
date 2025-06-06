@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tiktok_clone/core/utils/utils.dart';
 import 'package:tiktok_clone/models/auth/user_model.dart';
 import 'package:tiktok_clone/repositories/auth/auth_repository.dart';
 
@@ -42,7 +44,18 @@ class AuthController extends StateNotifier<AsyncValue<AppUser?>> {
     }
   }
 
-  Future<void> signInWithEmailAndPassword(String email, String password) async {
+  Future<void> signInWithEmailAndPassword(BuildContext context, String email, String password) async {
+    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+    if (email.isEmpty || password.isEmpty) {
+      showSnackBar(context, 'Please fill in all fields.');
+      state = AsyncValue.error('Fields cannot be empty', StackTrace.current);
+      return;
+    }
+    if (!emailRegex.hasMatch(email)) {
+      showSnackBar(context, 'Please enter a valid email address.');
+      state = AsyncValue.error('Invalid email format', StackTrace.current);
+      return;
+    }
     state = const AsyncValue.loading();
     try {
       await ref
@@ -51,7 +64,5 @@ class AuthController extends StateNotifier<AsyncValue<AppUser?>> {
     } catch (e) {
       state = AsyncValue.error(e, StackTrace.current);
     }
-
-    
   }
 }
