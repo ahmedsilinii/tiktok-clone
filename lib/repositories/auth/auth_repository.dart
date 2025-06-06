@@ -10,14 +10,6 @@ class AuthRepository {
 
   AuthRepository(this._auth, this._firestore);
 
-  // ignore: unused_element
-  Future<void> _createUserProfile(User user) async {
-    await _firestore.collection('userprofile').doc(user.uid).set({
-      'uid': user.uid,
-      'createdAt': FieldValue.serverTimestamp(),
-    });
-  }
-
   Stream<AppUser?> get authStateChanges {
     return _auth.authStateChanges().asyncMap((user) async {
       if (user == null) return null;
@@ -27,10 +19,27 @@ class AuthRepository {
 
   Future<void> signInAnonymously() async {
     try {
-      await _auth.signInAnonymously();
+      final userCredential = await _auth.signInAnonymously();
       // await _createUserProfile(userCredential.user!);
+      await _firestore.collection('users').doc(userCredential.user!.uid).set({
+        'uid': userCredential.user!.uid,
+        'displayName': 'Anonymous',
+        'createdAt': FieldValue.serverTimestamp(),
+      });
     } catch (e) {
       throw Exception('Failed to sign in anonymously: $e');
+    }
+  }
+
+  Future<void> deleteCurrentUser() async {
+    try {
+      final user = _auth.currentUser;
+      if (user != null) {
+        await _firestore.collection('users').doc(user.uid).delete();
+        await user.delete();
+      }
+    } catch (e) {
+      throw Exception('Failed to delete user: $e');
     }
   }
 
@@ -45,8 +54,6 @@ class AuthRepository {
   Future<void> signInWithEmailAndPassword(String email, String password) async {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
-      // Optionally, you can create a user profile if needed:
-      // await _createUserProfile(userCredential.user!);
     } catch (e) {
       throw Exception('Failed to sign in: $e');
     }

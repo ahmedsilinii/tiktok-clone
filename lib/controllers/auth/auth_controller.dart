@@ -94,13 +94,24 @@ class AuthController extends StateNotifier<AsyncValue<AppUser?>> {
     }
     state = const AsyncValue.loading();
     try {
-      await ref
-          .read(authRepositoryProvider)
-          .signUp(email, password, username);
+      await ref.read(authRepositoryProvider).signUp(email, password, username);
       // ignore: use_build_context_synchronously
       showSnackBar(context, "Account created successfully");
     } catch (e) {
       state = AsyncValue.error(e, StackTrace.current);
+    }
+  }
+
+  Future<void> deleteCurrentUser(BuildContext context) async {
+    state = const AsyncValue.loading();
+    try {
+      await ref.read(authRepositoryProvider).deleteCurrentUser();
+      // ignore: use_build_context_synchronously
+      showSnackBar(context, "Account deleted successfully");
+    } catch (e) {
+      state = AsyncValue.error(e, StackTrace.current);
+      // ignore: use_build_context_synchronously
+      showSnackBar(context, "Failed to delete account: $e");
     }
   }
 }

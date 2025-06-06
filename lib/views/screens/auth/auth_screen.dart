@@ -18,11 +18,9 @@ class AuthScreen extends ConsumerWidget {
           if (user == null) {
             return LoginScreen();
           }
-          return Text(
-            'Home Screen\nWelcome, ${user.displayName}!',
-            textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 24),
-          );
+
+
+            return Text('');
         },
       ),
     );
