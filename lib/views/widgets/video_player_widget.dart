@@ -1,3 +1,4 @@
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -24,6 +25,24 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
   void initState() {
     super.initState();
     _initVideo();
+    // ignore: deprecated_member_use
+    _controller = VideoPlayerController.file(File(widget.video.url))
+      ..addListener(() {
+        if (mounted) setState(() {});
+      });
+
+    // The URL can be local if it is a file path.
+    // For local files, use VideoPlayerController.file instead of .network.
+    // Example:
+    // _controller = VideoPlayerController.file(File(widget.video.url))
+    //   ..addListener(() {
+    //     if (mounted) setState(() {});
+    //   });
+
+    // If widget.video.url is a local file path:
+    // import 'dart:io'; at the top if not already imported.
+
+    // Otherwise, for network URLs, keep using VideoPlayerController.network.
   }
 
   Future<void> _initVideo() async {
