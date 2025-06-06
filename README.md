@@ -1,6 +1,6 @@
 # tiktok_clone
 
-A new Flutter project.
+Internship Technical Assignment Project 
 
 ---
 
