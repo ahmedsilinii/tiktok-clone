@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tiktok_clone/controllers/auth/auth_controller.dart';
 import 'package:tiktok_clone/core/constants/constants.dart';
 import 'package:tiktok_clone/views/screens/auth/signup_screen.dart';
 import 'package:tiktok_clone/views/widgets/text_input_field.dart';
@@ -34,14 +35,21 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   }
 
   void _onTapLogin() {
-    // Handle login logic here
+    final email = _emailController.text.trim();
+    final password = _passwordController.text.trim();
+
+    ref
+        .read(authControllerProvider.notifier)
+        .signInWithEmailAndPassword(email, password);
   }
 
   void _onTapSignUp() {
     Navigator.push(context, SignupScreen.route());
   }
 
-  void _onTapAnonymousLogin() {}
+  void _onTapAnonymousLogin() {
+    ref.read(authControllerProvider.notifier).signInAnonymously();
+  }
 
   @override
   Widget build(BuildContext context) {
