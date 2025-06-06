@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:tiktok_clone/core/providers/firebase_providers.dart';
@@ -9,10 +8,9 @@ import 'package:tiktok_clone/models/home/video_model.dart';
 
 class VideoRepository {
   final FirebaseFirestore _firestore;
-  final FirebaseStorage _storage;
   final DefaultCacheManager _cacheManager;
 
-  VideoRepository(this._firestore, this._storage, this._cacheManager);
+  VideoRepository(this._firestore, this._cacheManager);
 
   Stream<List<Video>> getVideos() {
     return _firestore
@@ -33,9 +31,5 @@ class VideoRepository {
 }
 
 final videoRepositoryProvider = Provider<VideoRepository>((ref) {
-  return VideoRepository(
-    ref.read(firestoreProvider),
-    ref.read(storageProvider),
-    DefaultCacheManager(),
-  );
+  return VideoRepository(ref.read(firestoreProvider), DefaultCacheManager());
 });
