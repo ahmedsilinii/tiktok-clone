@@ -48,7 +48,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   }
 
   void _onTapAnonymousLogin() {
-    ref.read(authControllerProvider.notifier).signInAnonymously();
+    ref.read(authControllerProvider.notifier).signInAnonymously(context);
   }
 
   @override

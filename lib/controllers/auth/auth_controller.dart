@@ -26,10 +26,12 @@ class AuthController extends StateNotifier<AsyncValue<AppUser?>> {
     }
   }
 
-  Future<void> signInAnonymously() async {
+  Future<void> signInAnonymously(BuildContext context) async {
     state = const AsyncValue.loading();
     try {
       await ref.read(authRepositoryProvider).signInAnonymously();
+      // ignore: use_build_context_synchronously
+      showSnackBar(context, "Signed in anonymously");
     } catch (e) {
       state = AsyncValue.error(e, StackTrace.current);
     }
@@ -44,7 +46,11 @@ class AuthController extends StateNotifier<AsyncValue<AppUser?>> {
     }
   }
 
-  Future<void> signInWithEmailAndPassword(BuildContext context, String email, String password) async {
+  Future<void> signInWithEmailAndPassword(
+    BuildContext context,
+    String email,
+    String password,
+  ) async {
     final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
     if (email.isEmpty || password.isEmpty) {
       showSnackBar(context, 'Please fill in all fields.');
