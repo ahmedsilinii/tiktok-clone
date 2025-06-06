@@ -32,6 +32,26 @@ class AuthRepository {
       'createdAt': FieldValue.serverTimestamp(),
     });
   }
+
+  Future<void> signOut() async {
+    try {
+      await _auth.signOut();
+    } catch (e) {
+      throw Exception('Failed to sign out: $e');
+    }
+  }
+
+  Future<void> signInWithEmailAndPassword(String email, String password) async {
+    try {
+      final userCredential = await _auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      await _createUserProfile(userCredential.user!);
+    } catch (e) {
+      throw Exception('Failed to sign in: $e');
+    }
+  }
 }
 
 final authRepositoryProvider = Provider<AuthRepository>((ref) {
