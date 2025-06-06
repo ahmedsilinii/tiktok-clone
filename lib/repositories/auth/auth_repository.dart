@@ -10,6 +10,13 @@ class AuthRepository {
 
   AuthRepository(this._auth, this._firestore);
 
+   Future<void> _createUserProfile(User user) async {
+    await _firestore.collection('users').doc(user.uid).set({
+      'uid': user.uid,
+      'createdAt': FieldValue.serverTimestamp(),
+    });
+  }
+
   Stream<AppUser?> get authStateChanges {
     return _auth.authStateChanges().asyncMap((user) async {
       if (user == null) return null;
@@ -24,13 +31,6 @@ class AuthRepository {
     } catch (e) {
       throw Exception('Failed to sign in anonymously: $e');
     }
-  }
-
-  Future<void> _createUserProfile(User user) async {
-    await _firestore.collection('users').doc(user.uid).set({
-      'uid': user.uid,
-      'createdAt': FieldValue.serverTimestamp(),
-    });
   }
 
   Future<void> signOut() async {
