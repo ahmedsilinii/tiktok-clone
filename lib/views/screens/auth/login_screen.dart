@@ -89,7 +89,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         borderRadius: BorderRadius.circular(8),
                       ),
                     ),
-                    child: const Text('Login'),
+                    child: const Text(
+                      'Login',
+                      style: TextStyle(color: AppColors.textColor),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 16),

@@ -71,4 +71,33 @@ class AuthController extends StateNotifier<AsyncValue<AppUser?>> {
       state = AsyncValue.error(e, StackTrace.current);
     }
   }
+
+  Future<void> signUp(
+    BuildContext context,
+    String email,
+    String password,
+    String username,
+  ) async {
+    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+    if (email.isEmpty || password.isEmpty || username.isEmpty) {
+      showSnackBar(context, 'Please fill in all fields.');
+      state = AsyncValue.error('Fields cannot be empty', StackTrace.current);
+      return;
+    }
+    if (!emailRegex.hasMatch(email)) {
+      showSnackBar(context, 'Please enter a valid email address.');
+      state = AsyncValue.error('Invalid email format', StackTrace.current);
+      return;
+    }
+    state = const AsyncValue.loading();
+    try {
+      await ref
+          .read(authRepositoryProvider)
+          .signUp(email, password, username);
+      // ignore: use_build_context_synchronously
+      showSnackBar(context, "Account created successfully");
+    } catch (e) {
+      state = AsyncValue.error(e, StackTrace.current);
+    }
+  }
 }

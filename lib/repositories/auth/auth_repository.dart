@@ -10,7 +10,7 @@ class AuthRepository {
 
   AuthRepository(this._auth, this._firestore);
 
-   Future<void> _createUserProfile(User user) async {
+  Future<void> _createUserProfile(User user) async {
     await _firestore.collection('users').doc(user.uid).set({
       'uid': user.uid,
       'createdAt': FieldValue.serverTimestamp(),
@@ -50,6 +50,28 @@ class AuthRepository {
       await _createUserProfile(userCredential.user!);
     } catch (e) {
       throw Exception('Failed to sign in: $e');
+    }
+  }
+
+  Future<void> signUp(
+    String email,
+    String password,
+    String username,
+  ) async {
+    try {
+      final userCredential = await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      final user = userCredential.user!;
+      await _firestore.collection('users').doc(user.uid).set({
+        'uid': user.uid,
+        'email': email,
+        'displayName': username,
+        'createdAt': FieldValue.serverTimestamp(),
+      });
+    } catch (e) {
+      throw Exception('Failed to sign up: $e');
     }
   }
 }
