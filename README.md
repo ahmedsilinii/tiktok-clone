@@ -4,7 +4,7 @@ A new Flutter project.
 
 ---
 
-![Architecture Diagram](architecture.png)
+![Architecture Diagram](Architecture.png)
 
 ---
 
