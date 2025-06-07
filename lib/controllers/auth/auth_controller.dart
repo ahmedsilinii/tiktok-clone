@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tiktok_clone/core/utils/utils.dart';
 import 'package:tiktok_clone/models/auth/user_model.dart';
 import 'package:tiktok_clone/repositories/auth/auth_repository.dart';
+import 'package:tiktok_clone/views/screens/auth/login_screen.dart';
 import 'package:tiktok_clone/views/screens/home/home_screen.dart';
 
 final authControllerProvider =
@@ -44,6 +45,10 @@ class AuthController extends StateNotifier<AsyncValue<AppUser?>> {
     state = const AsyncValue.loading();
     try {
       await ref.read(authRepositoryProvider).signOut(context);
+      // ignore: use_build_context_synchronously
+      showSnackBar(context, 'Signed out successfully');
+      // ignore: use_build_context_synchronously
+      Navigator.push(context, LoginScreen.route());
     } catch (e) {
       state = AsyncValue.error(e, StackTrace.current);
     }
