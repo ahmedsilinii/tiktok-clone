@@ -17,9 +17,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   void _onTabTapped(int index) {
     if (index == 1) {
-      Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => const ProfileScreen()),
-      );
+      Navigator.of(
+        context,
+      ).push(MaterialPageRoute(builder: (context) => const ProfileScreen()));
     } else {
       setState(() {
         _selectedTab = index;
@@ -48,7 +48,28 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     .preCacheVideos(videoList, index);
               },
               itemBuilder: (context, index) {
-                return LocalVideoPlayer(assetPath: videoList[index].url);
+                final video = videoList[index];
+                return Stack(
+                  children: [
+                    LocalVideoPlayer(assetPath: video.url),
+                    Positioned(
+                      right: 16,
+                      bottom: 100,
+                      child: Column(
+                        children: [
+                          Icon(Icons.thumb_up, color: Colors.white, size: 32),
+                          Text(
+                            '${video.likes}',
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                );
               },
             ),
       ),
