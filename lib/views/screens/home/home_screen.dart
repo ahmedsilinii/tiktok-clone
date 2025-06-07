@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tiktok_clone/controllers/auth/auth_controller.dart';
 import 'package:tiktok_clone/controllers/home/video_controller.dart';
 import 'package:tiktok_clone/views/widgets/local_video_player_widget.dart';
 
@@ -57,14 +58,30 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       bottom: 100,
                       child: Column(
                         children: [
-                          Icon(Icons.thumb_up, color: Colors.white, size: 32),
-                          Text(
-                            '${video.likes}',
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
+                          IconButton(
+                            icon: Icon(
+                                video.likedBy.contains(
+                                  ref.read(authControllerProvider).value?.uid,
+                                  )
+                                  ? Icons.thumb_up
+                                  : Icons.thumb_up_outlined,
                             ),
+                            onPressed:
+                                () => ref
+                                    .read(videoControllerProvider.notifier)
+                                    .toggleLike(
+                                      userId:
+                                          ref
+                                              .read(authControllerProvider)
+                                              .value
+                                              ?.uid ??
+                                          '',
+                                      currentLikedBy: video.likedBy,
+                                      currentLikes: video.likes,
+                                      videoId: video.id,
+                                    ),
                           ),
+                          Text('${video.likes}'),
                         ],
                       ),
                     ),

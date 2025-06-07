@@ -38,6 +38,7 @@ class VideoRepository {
   }
 
   Future<File?> cacheVideo(String url) async {
+    if (url.startsWith('assets/')) return null;
     return await _cacheManager.getSingleFile(url);
   }
 

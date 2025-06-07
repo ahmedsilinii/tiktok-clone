@@ -89,9 +89,12 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
                 onPressed:
                     () => ref
                         .read(videoControllerProvider.notifier)
-                        .likeVideo(
-                          widget.video.id,
-                          ref.read(authControllerProvider).value!.uid,
+                        .toggleLike(
+                          userId:
+                              ref.read(authControllerProvider).value?.uid ?? '',
+                          currentLikedBy: widget.video.likedBy,
+                          currentLikes: widget.video.likes,
+                          videoId: widget.video.id,
                         ),
               ),
               Text('${widget.video.likes}'),
