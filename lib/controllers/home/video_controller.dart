@@ -10,23 +10,29 @@ final videoControllerProvider =
     });
 
 class VideoController extends StreamNotifier<List<Video>> {
+  late final VideoRepository _repository = ref.read(videoRepositoryProvider);
+
   @override
   Stream<List<Video>> build() {
     return ref.read(videoRepositoryProvider).getVideos();
   }
 
-  Future<void> likeVideo(String videoId, String userId) async {
+  Future<void> toggleLike({
+    required String userId,
+    required List<String> currentLikedBy,
+    required int currentLikes,
+    required String videoId,
+  }) async {
+    state = const AsyncValue.loading();
     try {
-      await ref
-          .read(firestoreProvider)
-          .collection('videos')
-          .doc(videoId)
-          .update({
-            'likes': FieldValue.increment(1),
-            'likedBy': FieldValue.arrayUnion([userId]),
-          });
-    } catch (e) {
-      throw Exception('Failed to like video: $e');
+      await _repository.toggleLike(
+        videoId: videoId,
+        userId: userId,
+        currentLikedBy: currentLikedBy,
+        currentLikes: currentLikes,
+      );
+    } catch (e, st) {
+      state = AsyncValue.error(e, st);
     }
   }
 

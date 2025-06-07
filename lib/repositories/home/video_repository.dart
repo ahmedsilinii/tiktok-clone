@@ -13,17 +13,17 @@ class VideoRepository {
   VideoRepository(this._firestore, this._cacheManager);
 
   Stream<List<Video>> getVideos() {
-     return _firestore
-         .collection('videos')
-         .orderBy('createdAt', descending: true)
-         .snapshots()
-         .map(
-           (snapshot) =>
-               snapshot.docs
-                   .map((doc) => Video.fromMap(doc.data(), doc.id))
-                   .toList(),
-         );
-    // return Stream.value(_localVideos); 
+    return _firestore
+        .collection('videos')
+        .orderBy('createdAt', descending: true)
+        .snapshots()
+        .map(
+          (snapshot) =>
+              snapshot.docs
+                  .map((doc) => Video.fromMap(doc.data(), doc.id))
+                  .toList(),
+        );
+    // return Stream.value(_localVideos);
   }
 
   Future<List<File>> getCachedVideos(List<String> urls) async {
@@ -38,7 +38,6 @@ class VideoRepository {
   }
 
   Future<File?> cacheVideo(String url) async {
-    if (url.startsWith('assets/')) return null;
     return await _cacheManager.getSingleFile(url);
   }
 
@@ -83,12 +82,21 @@ class VideoRepository {
 
   List<Video> getLocalVideos() => _localVideos;
 
-  void toggleLike(String videoId) {
-    final video = _localVideos.firstWhere(
-      (v) => v.id == videoId,
-      orElse: () => throw Exception('Video not found'),
-    );
-    video.likes++;
+  Future<void> toggleLike({
+    required String videoId,
+    required String userId,
+    required List<String> currentLikedBy,
+    required int currentLikes,
+  }) async {
+    final isLiked = currentLikedBy.contains(userId);
+
+    await _firestore.collection('videos').doc(videoId).update({
+      'likes': isLiked ? currentLikes - 1 : currentLikes + 1,
+      'likedBy':
+          isLiked
+              ? FieldValue.arrayRemove([userId])
+              : FieldValue.arrayUnion([userId]),
+    });
   }
 }
 
