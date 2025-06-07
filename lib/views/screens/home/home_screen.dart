@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tiktok_clone/controllers/home/video_controller.dart';
 import 'package:tiktok_clone/models/home/video_model.dart';
 import 'package:tiktok_clone/repositories/home/video_repository.dart';
+import 'package:tiktok_clone/views/widgets/local_video_player_widget.dart';
 import 'package:tiktok_clone/views/widgets/video_player_widget.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
@@ -35,7 +36,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 _preCacheVideos(videos, index);
               },
               itemBuilder: (context, index) {
-                return VideoPlayerWidget(video: videos[index]);
+                return LocalVideoPlayer(assetPath: videos[index].url);
               },
             ),
       ),
