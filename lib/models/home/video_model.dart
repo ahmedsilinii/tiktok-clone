@@ -4,7 +4,7 @@ class Video {
   final String id;
   final String url; //file path - assetPath or network URL
   final String title;
-  final int likes;
+  int likes;
   final List<String> likedBy;
   final String creatorId;
   final DateTime createdAt;

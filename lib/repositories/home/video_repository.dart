@@ -39,6 +39,55 @@ class VideoRepository {
   Future<File> cacheVideo(String url) async {
     return await _cacheManager.getSingleFile(url);
   }
+
+  // Example local video list for testing/demo purposes.
+  final List<Video> _localVideos = [
+    Video(
+      id: '1',
+      url: 'assets/videos/video1.mp4',
+      title: 'Funny Cat',
+      creatorId: 'user1',
+      createdAt: DateTime.now(),
+    ),
+    Video(
+      id: '2',
+      url: 'assets/videos/video2.mp4',
+      title: 'Dancing Dog',
+      creatorId: 'user2',
+      createdAt: DateTime.now(),
+    ),
+    Video(
+      id: '3',
+      url: 'assets/videos/video3.mp4',
+      title: 'Epic Fail',
+      creatorId: 'user3',
+      createdAt: DateTime.now(),
+    ),
+    Video(
+      id: '4',
+      url: 'assets/videos/video4.mp4',
+      title: 'Amazing Nature',
+      creatorId: 'user4',
+      createdAt: DateTime.now(),
+    ),
+    Video(
+      id: '5',
+      url: 'assets/videos/video5.mp4',
+      title: 'Cooking Show',
+      creatorId: 'user5',
+      createdAt: DateTime.now(),
+    ),
+  ];
+
+  List<Video> getLocalVideos() => _localVideos;
+
+  void toggleLike(String videoId) {
+    final video = _localVideos.firstWhere(
+      (v) => v.id == videoId,
+      orElse: () => throw Exception('Video not found'),
+    );
+    video.likes++;
+  }
 }
 
 final videoRepositoryProvider = Provider<VideoRepository>((ref) {
