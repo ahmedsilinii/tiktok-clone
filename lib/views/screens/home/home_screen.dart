@@ -13,6 +13,19 @@ class HomeScreen extends ConsumerStatefulWidget {
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   final PageController _pageController = PageController();
   int _currentIndex = 0;
+  int _selectedTab = 0;
+
+  void _onTabTapped(int index) {
+    if (index == 1) {
+      Navigator.of(context).push(
+        MaterialPageRoute(builder: (context) => const ProfileScreen()),
+      );
+    } else {
+      setState(() {
+        _selectedTab = index;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +51,33 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 return LocalVideoPlayer(assetPath: videoList[index].url);
               },
             ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedTab,
+        onTap: _onTabTapped,
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.grey[400],
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+        ],
+      ),
+    );
+  }
+}
+
+class ProfileScreen extends StatelessWidget {
+  const ProfileScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Profile')),
+      body: const Center(
+        child: Text(
+          'This is the Profile Screen',
+          style: TextStyle(fontSize: 24),
+        ),
       ),
     );
   }
