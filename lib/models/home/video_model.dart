@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Video {
   final String id;
-  final String url;
+  final String url; //file path - assetPath or network URL
   final String title;
   final int likes;
   final List<String> likedBy;
@@ -13,8 +13,8 @@ class Video {
     required this.id,
     required this.url,
     required this.title,
-    required this.likes,
-    required this.likedBy,
+    this.likes = 0,
+    this.likedBy = const [],
     required this.creatorId,
     required this.createdAt,
   });
