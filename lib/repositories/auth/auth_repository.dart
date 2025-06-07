@@ -1,8 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tiktok_clone/core/utils/utils.dart';
 import 'package:tiktok_clone/models/auth/user_model.dart';
 import 'package:tiktok_clone/core/providers/firebase_providers.dart';
+import 'package:tiktok_clone/views/screens/auth/login_screen.dart';
 
 class AuthRepository {
   final FirebaseAuth _auth;
@@ -43,10 +46,16 @@ class AuthRepository {
     }
   }
 
-  Future<void> signOut() async {
+  Future<void> signOut(BuildContext context) async {
     try {
       await _auth.signOut();
+      // ignore: use_build_context_synchronously
+      showSnackBar(context, 'Signed out successfully');
+      // ignore: use_build_context_synchronously
+      Navigator.push(context, LoginScreen.route());
     } catch (e) {
+      // ignore: use_build_context_synchronously
+      showSnackBar(context, 'Failed to sign out: $e');
       throw Exception('Failed to sign out: $e');
     }
   }

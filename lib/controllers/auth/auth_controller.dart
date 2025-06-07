@@ -37,10 +37,10 @@ class AuthController extends StateNotifier<AsyncValue<AppUser?>> {
     }
   }
 
-  Future<void> signOut() async {
+  Future<void> signOut(BuildContext context) async {
     state = const AsyncValue.loading();
     try {
-      await ref.read(authRepositoryProvider).signOut();
+      await ref.read(authRepositoryProvider).signOut(context);
     } catch (e) {
       state = AsyncValue.error(e, StackTrace.current);
     }

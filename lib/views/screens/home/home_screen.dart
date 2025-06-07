@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tiktok_clone/controllers/auth/auth_controller.dart';
 import 'package:tiktok_clone/controllers/home/video_controller.dart';
+import 'package:tiktok_clone/views/screens/auth/profile_screen.dart';
 import 'package:tiktok_clone/views/widgets/local_video_player_widget.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
@@ -18,9 +19,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   void _onTabTapped(int index) {
     if (index == 1) {
-      Navigator.of(
-        context,
-      ).push(MaterialPageRoute(builder: (context) => const ProfileScreen()));
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => const ProfileScreen()),
+      );
     } else {
       setState(() {
         _selectedTab = index;
@@ -60,8 +61,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         children: [
                           IconButton(
                             icon: Icon(
-                                video.likedBy.contains(
-                                  ref.read(authControllerProvider).value?.uid,
+                              video.likedBy.contains(
+                                    ref.read(authControllerProvider).value?.uid,
                                   )
                                   ? Icons.thumb_up
                                   : Icons.thumb_up_outlined,
@@ -99,23 +100,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
-      ),
-    );
-  }
-}
-
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Profile')),
-      body: const Center(
-        child: Text(
-          'This is the Profile Screen',
-          style: TextStyle(fontSize: 24),
-        ),
       ),
     );
   }
