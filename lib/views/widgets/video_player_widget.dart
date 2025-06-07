@@ -58,7 +58,7 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
           _controller.setLooping(true);
         });
     } catch (e) {
-      print('Error initializing video: $e');
+      // Handle error
     }
   }
 
