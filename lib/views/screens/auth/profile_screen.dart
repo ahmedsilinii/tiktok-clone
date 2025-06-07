@@ -4,12 +4,17 @@ import 'package:tiktok_clone/controllers/auth/auth_controller.dart';
 import 'package:tiktok_clone/views/screens/home/home_screen.dart';
 
 class ProfileScreen extends ConsumerWidget {
+  static Route route() {
+    return MaterialPageRoute(builder: (_) => const ProfileScreen());
+  }
+
   const ProfileScreen({super.key});
 
   void _onTabTapped(BuildContext context, int index) {
     if (index == 0) {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const HomeScreen()),
+        HomeScreen.route(),
+
       );
     }
     // If index == 1, already on ProfileScreen, do nothing.
@@ -36,20 +41,24 @@ class ProfileScreen extends ConsumerWidget {
                 children: [
                   const Icon(Icons.account_circle, size: 100),
                   const SizedBox(height: 24),
-            
+
                   Text(
-                    user.email?.isNotEmpty == true ? user.email! : 'No Email',
+                    user.email?.isNotEmpty == true
+                        ? user.email!
+                        : 'Anonymous User',
                     style: const TextStyle(fontSize: 16),
                   ),
                   const SizedBox(height: 12),
-            
+
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
                       foregroundColor: Colors.black,
                     ),
                     onPressed: () {
-                      ref.read(authControllerProvider.notifier).signOut(context);
+                      ref
+                          .read(authControllerProvider.notifier)
+                          .signOut(context);
                     },
                     child: const Text('Sign Out'),
                   ),

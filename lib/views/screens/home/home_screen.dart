@@ -7,6 +7,9 @@ import 'package:tiktok_clone/views/widgets/local_video_player_widget.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
+  static Route route() {
+    return MaterialPageRoute(builder: (_) => const HomeScreen());
+  }
 
   @override
   ConsumerState<HomeScreen> createState() => _HomeScreenState();

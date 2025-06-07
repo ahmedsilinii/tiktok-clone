@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tiktok_clone/core/utils/utils.dart';
 import 'package:tiktok_clone/models/auth/user_model.dart';
 import 'package:tiktok_clone/repositories/auth/auth_repository.dart';
+import 'package:tiktok_clone/views/screens/home/home_screen.dart';
 
 final authControllerProvider =
     StateNotifierProvider<AuthController, AsyncValue<AppUser?>>((ref) {
@@ -32,6 +33,8 @@ class AuthController extends StateNotifier<AsyncValue<AppUser?>> {
       await ref.read(authRepositoryProvider).signInAnonymously();
       // ignore: use_build_context_synchronously
       showSnackBar(context, "Signed in anonymously");
+      // ignore: use_build_context_synchronously
+      Navigator.pushReplacement(context, HomeScreen.route());
     } catch (e) {
       state = AsyncValue.error(e, StackTrace.current);
     }
