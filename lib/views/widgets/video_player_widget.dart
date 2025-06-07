@@ -51,7 +51,7 @@ class _VideoPlayerWidgetState extends ConsumerState<VideoPlayerWidget> {
           .read(videoRepositoryProvider)
           .cacheVideo(widget.video.url);
 
-      _controller = VideoPlayerController.file(cachedFile)
+      _controller = VideoPlayerController.file(cachedFile!)
         ..initialize().then((_) {
           setState(() => _isLoading = false);
           _controller.play();

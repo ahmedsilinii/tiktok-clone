@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tiktok_clone/controllers/home/video_controller.dart';
-import 'package:tiktok_clone/models/home/video_model.dart';
-import 'package:tiktok_clone/repositories/home/video_repository.dart';
 import 'package:tiktok_clone/views/widgets/local_video_player_widget.dart';
-import 'package:tiktok_clone/views/widgets/video_player_widget.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -22,36 +19,27 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final videos = ref.watch(videoControllerProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Video Feed App')),
+      appBar: AppBar(
+        title: Text('Video Feed App'),
+      ),
       body: videos.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, _) => Center(child: Text('Error: $error')),
-        data:
-            (videos) => PageView.builder(
+        data: (videoList) => PageView.builder(
               controller: _pageController,
               scrollDirection: Axis.vertical,
-              itemCount: videos.length,
+              itemCount: videoList.length,
               onPageChanged: (index) {
                 setState(() => _currentIndex = index);
-                _preCacheVideos(videos, index);
+                // preCacheVideos(videoList, index);
               },
               itemBuilder: (context, index) {
-                return LocalVideoPlayer(assetPath: videos[index].url);
+                return LocalVideoPlayer(assetPath: videoList[index].url);
               },
             ),
       ),
     );
   }
 
-  void _preCacheVideos(List<Video> videos, int currentIndex) {
-    final indicesToCache = [
-      currentIndex - 1,
-      currentIndex,
-      currentIndex + 1,
-    ].where((i) => i >= 0 && i < videos.length);
 
-    for (final index in indicesToCache) {
-      ref.read(videoRepositoryProvider).cacheVideo(videos[index].url);
-    }
-  }
 }

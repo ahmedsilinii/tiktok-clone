@@ -30,12 +30,15 @@ class _LocalVideoPlayerState extends State<LocalVideoPlayer> {
 
   @override
   Widget build(BuildContext context) {
-    return _controller.value.isInitialized
-        ? AspectRatio(
-          aspectRatio: _controller.value.aspectRatio,
-          child: VideoPlayer(_controller),
-        )
-        : const Center(child: CircularProgressIndicator());
+    return Center(
+      child:
+          _controller.value.isInitialized
+              ? AspectRatio(
+                aspectRatio: _controller.value.aspectRatio,
+                child: VideoPlayer(_controller),
+              )
+              : const CircularProgressIndicator(),
+    );
   }
 
   @override

@@ -13,16 +13,17 @@ class VideoRepository {
   VideoRepository(this._firestore, this._cacheManager);
 
   Stream<List<Video>> getVideos() {
-    return _firestore
-        .collection('videos')
-        .orderBy('createdAt', descending: true)
-        .snapshots()
-        .map(
-          (snapshot) =>
-              snapshot.docs
-                  .map((doc) => Video.fromMap(doc.data(), doc.id))
-                  .toList(),
-        );
+    // return _firestore
+    //     .collection('videos')
+    //     .orderBy('createdAt', descending: true)
+    //     .snapshots()
+    //     .map(
+    //       (snapshot) =>
+    //           snapshot.docs
+    //               .map((doc) => Video.fromMap(doc.data(), doc.id))
+    //               .toList(),
+    //     );
+    return Stream.value(_localVideos); 
   }
 
   Future<List<File>> getCachedVideos(List<String> urls) async {
@@ -36,7 +37,8 @@ class VideoRepository {
     return files;
   }
 
-  Future<File> cacheVideo(String url) async {
+  Future<File?> cacheVideo(String url) async {
+    if (url.startsWith('assets/')) return null;
     return await _cacheManager.getSingleFile(url);
   }
 
@@ -44,37 +46,37 @@ class VideoRepository {
   final List<Video> _localVideos = [
     Video(
       id: '1',
-      url: 'assets/videos/video1.mp4',
+      url: 'assets/video1.mp4',
       title: 'Funny Cat',
-      creatorId: 'user1',
+      creatorId: 'o45TDWXD33OpIL7smvIc4NJH3CB3',
       createdAt: DateTime.now(),
     ),
     Video(
       id: '2',
-      url: 'assets/videos/video2.mp4',
+      url: 'assets/video2.mp4',
       title: 'Dancing Dog',
-      creatorId: 'user2',
+      creatorId: 'o45TDWXD33OpIL7smvIc4NJH3CB3',
       createdAt: DateTime.now(),
     ),
     Video(
       id: '3',
-      url: 'assets/videos/video3.mp4',
+      url: 'assets/video3.mp4',
       title: 'Epic Fail',
-      creatorId: 'user3',
+      creatorId: 'o45TDWXD33OpIL7smvIc4NJH3CB3',
       createdAt: DateTime.now(),
     ),
     Video(
       id: '4',
-      url: 'assets/videos/video4.mp4',
+      url: 'assets/video4.mp4',
       title: 'Amazing Nature',
-      creatorId: 'user4',
+      creatorId: 'o45TDWXD33OpIL7smvIc4NJH3CB3',
       createdAt: DateTime.now(),
     ),
     Video(
       id: '5',
-      url: 'assets/videos/video5.mp4',
+      url: 'assets/video5.mp4',
       title: 'Cooking Show',
-      creatorId: 'user5',
+      creatorId: 'o45TDWXD33OpIL7smvIc4NJH3CB3',
       createdAt: DateTime.now(),
     ),
   ];
