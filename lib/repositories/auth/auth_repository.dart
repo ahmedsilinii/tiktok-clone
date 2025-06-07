@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tiktok_clone/core/utils/utils.dart';
 import 'package:tiktok_clone/models/auth/user_model.dart';
 import 'package:tiktok_clone/core/providers/firebase_providers.dart';
-import 'package:tiktok_clone/views/screens/auth/login_screen.dart';
 
 class AuthRepository {
   final FirebaseAuth _auth;
