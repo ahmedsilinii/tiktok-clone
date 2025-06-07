@@ -13,17 +13,17 @@ class VideoRepository {
   VideoRepository(this._firestore, this._cacheManager);
 
   Stream<List<Video>> getVideos() {
-    // return _firestore
-    //     .collection('videos')
-    //     .orderBy('createdAt', descending: true)
-    //     .snapshots()
-    //     .map(
-    //       (snapshot) =>
-    //           snapshot.docs
-    //               .map((doc) => Video.fromMap(doc.data(), doc.id))
-    //               .toList(),
-    //     );
-    return Stream.value(_localVideos); 
+     return _firestore
+         .collection('videos')
+         .orderBy('createdAt', descending: true)
+         .snapshots()
+         .map(
+           (snapshot) =>
+               snapshot.docs
+                   .map((doc) => Video.fromMap(doc.data(), doc.id))
+                   .toList(),
+         );
+    // return Stream.value(_localVideos); 
   }
 
   Future<List<File>> getCachedVideos(List<String> urls) async {

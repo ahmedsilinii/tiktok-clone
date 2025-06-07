@@ -19,19 +19,20 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final videos = ref.watch(videoControllerProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Video Feed App'),
-      ),
+      appBar: AppBar(title: Text('Video Feed App')),
       body: videos.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, _) => Center(child: Text('Error: $error')),
-        data: (videoList) => PageView.builder(
+        data:
+            (videoList) => PageView.builder(
               controller: _pageController,
               scrollDirection: Axis.vertical,
               itemCount: videoList.length,
               onPageChanged: (index) {
                 setState(() => _currentIndex = index);
-                // preCacheVideos(videoList, index);
+                ref
+                    .read(videoControllerProvider.notifier)
+                    .preCacheVideos(videoList, index);
               },
               itemBuilder: (context, index) {
                 return LocalVideoPlayer(assetPath: videoList[index].url);
@@ -40,6 +41,4 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       ),
     );
   }
-
-
 }
