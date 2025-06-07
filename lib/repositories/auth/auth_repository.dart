@@ -49,10 +49,6 @@ class AuthRepository {
   Future<void> signOut(BuildContext context) async {
     try {
       await _auth.signOut();
-      // ignore: use_build_context_synchronously
-      showSnackBar(context, 'Signed out successfully');
-      // ignore: use_build_context_synchronously
-      Navigator.push(context, LoginScreen.route());
     } catch (e) {
       // ignore: use_build_context_synchronously
       showSnackBar(context, 'Failed to sign out: $e');
